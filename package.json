@@ -1,0 +1,41 @@
+{
+  "name": "rogveda",
+  "private": true,
+  "type": "module",
+  "packageManager": "pnpm@10.28.2",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "repo:doctor": "node tools/repo/doctor.mjs",
+    "repo:bootstrap": "node tools/repo/bootstrap.mjs",
+    "repo:policy": "node tools/repo/policy.mjs",
+    "repo:sync": "node tools/repo/sync.mjs",
+    "repo:quality": "node tools/repo/quality.mjs",
+    "repo:check": "node tools/repo/check.mjs",
+    "test": "vitest run --passWithNoTests"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.104.0",
+    "framer-motion": "^12.38.0",
+    "next": "^16.2.4",
+    "react": "^19.2.5",
+    "react-dom": "^19.2.5",
+    "zod": "^4.3.6"
+  },
+  "devDependencies": {
+    "@biomejs/biome": "^1.9.4",
+    "@lhci/cli": "^0.14.0",
+    "@playwright/test": "^1.54.2",
+    "@tailwindcss/postcss": "^4.2.4",
+    "@types/node": "^24.10.1",
+    "@types/react": "^19.2.7",
+    "@types/react-dom": "^19.2.3",
+    "dependency-cruiser": "^16.10.4",
+    "knip": "^5.50.3",
+    "postcss": "^8.5.6",
+    "tailwindcss": "^4.2.4",
+    "typescript": "^5.9.3",
+    "vitest": "^3.2.4"
+  }
+}

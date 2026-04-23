@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+
+printf '%s\n' "Rogveda pre-commit quality gate"
+pnpm repo:quality

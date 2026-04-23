@@ -1,0 +1,22 @@
+{
+  "$schema": "https://unpkg.com/knip@latest/schema.json",
+  "entry": [
+    "app/**/*.{ts,tsx}",
+    "features/**/*.{ts,tsx}",
+    "lib/**/*.{ts,tsx}",
+    "supabase/**/*.ts",
+    "tools/repo/*.mjs",
+    "tests/**/*.test.ts"
+  ],
+  "project": [
+    "app/**/*.{ts,tsx}",
+    "features/**/*.{ts,tsx}",
+    "lib/**/*.{ts,tsx}",
+    "supabase/**/*.ts",
+    "tools/repo/*.mjs",
+    "tests/**/*.ts",
+    "*.config.{cjs,mjs,ts}",
+    ".github/**/*.md"
+  ],
+  "ignoreDependencies": ["@biomejs/biome", "@lhci/cli", "dependency-cruiser", "tailwindcss"]
+}
