@@ -5,21 +5,25 @@
     sans-serif;
   --font-serif: var(--font-newsreader), "Iowan Old Style", Georgia, serif;
 
-  --color-bg: #f6f1e8;
-  --color-paper: #fffdf8;
-  --color-ink: #1e1b16;
-  --color-accent: #0f766e;
-  --color-accent-soft: #dceeea;
-  --color-warm: #b45309;
-  --color-border: rgba(112, 88, 53, 0.14);
+  --color-bg: #f4eee3;
+  --color-paper: #fffaf2;
+  --color-ink: #171610;
+  --color-accent: #0f6d68;
+  --color-accent-soft: #d8ece8;
+  --color-anchor: #123936;
+  --color-anchor-soft: #e4ece8;
+  --color-brass: #a26722;
+  --color-brass-soft: #f1e4d1;
+  --color-warm: #c07b2c;
+  --color-border: rgba(76, 58, 35, 0.14);
   --color-success: #2f6f57;
   --color-danger: #a85632;
 
-  --shadow-soft: 0 24px 70px rgba(40, 24, 5, 0.08);
-  --shadow-operation: 0 12px 34px rgba(40, 24, 5, 0.05);
-  --shadow-elevated: 0 8px 32px rgba(40, 24, 5, 0.1), 0 2px 8px rgba(40, 24, 5, 0.06);
-  --shadow-cta: 0 4px 16px rgba(15, 118, 110, 0.24);
-  --shadow-cta-hover: 0 8px 24px rgba(15, 118, 110, 0.32);
+  --shadow-soft: 0 28px 80px rgba(36, 23, 8, 0.08);
+  --shadow-operation: 0 18px 44px rgba(21, 27, 28, 0.08);
+  --shadow-elevated: 0 12px 40px rgba(31, 20, 6, 0.1), 0 3px 12px rgba(31, 20, 6, 0.05);
+  --shadow-cta: 0 12px 28px rgba(15, 109, 104, 0.28);
+  --shadow-cta-hover: 0 16px 38px rgba(15, 109, 104, 0.34);
 
   --radius-hero: 32px;
   --radius-panel: 24px;
@@ -28,13 +32,17 @@
 }
 
 :root {
-  --bg: #f6f1e8;
-  --paper: #fffdf8;
-  --ink: #1e1b16;
-  --accent: #0f766e;
-  --accent-soft: #dceeea;
-  --warm: #b45309;
-  --border: rgba(112, 88, 53, 0.14);
+  --bg: #f4eee3;
+  --paper: #fffaf2;
+  --ink: #171610;
+  --accent: #0f6d68;
+  --accent-soft: #d8ece8;
+  --anchor: #123936;
+  --anchor-soft: #e4ece8;
+  --brass: #a26722;
+  --brass-soft: #f1e4d1;
+  --warm: #c07b2c;
+  --border: rgba(76, 58, 35, 0.14);
   --success: #2f6f57;
   --danger: #a85632;
 }
@@ -44,14 +52,17 @@
 }
 
 html {
-  background: radial-gradient(ellipse at 10% 0%, rgba(15, 118, 110, 0.07), transparent 50%),
-    radial-gradient(ellipse at 90% 0%, rgba(180, 83, 9, 0.06), transparent 45%), var(--bg);
+  background: radial-gradient(circle at top left, rgba(15, 109, 104, 0.08), transparent 30%),
+    radial-gradient(circle at top right, rgba(162, 103, 34, 0.08), transparent 32%),
+    linear-gradient(180deg, rgba(255, 250, 242, 0.72), rgba(244, 238, 227, 0.96)), var(--bg);
   color: var(--ink);
 }
 
 body {
   margin: 0;
   min-height: 100vh;
+  overflow-x: hidden;
+  background: transparent;
 }
 
 a {
@@ -59,71 +70,81 @@ a {
   text-decoration: none;
 }
 
+button,
+input,
+select,
+textarea {
+  font: inherit;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
 ::selection {
-  background: rgba(15, 118, 110, 0.24);
+  background: rgba(15, 109, 104, 0.2);
   color: var(--ink);
 }
 
-/* ── Typography Scale (UI Bible) ────────────────────────────── */
-
 .type-display-xl {
   font-family: var(--font-serif);
-  font-weight: 600;
   font-size: 42px;
   line-height: 46px;
-  letter-spacing: -0.02em;
+  font-weight: 600;
+  letter-spacing: -0.03em;
 }
 
 .type-display-l {
   font-family: var(--font-serif);
-  font-weight: 600;
   font-size: 34px;
   line-height: 38px;
-  letter-spacing: -0.01em;
+  font-weight: 600;
+  letter-spacing: -0.02em;
 }
 
 .type-heading-xl {
   font-family: var(--font-sans);
-  font-weight: 700;
   font-size: 28px;
   line-height: 34px;
-  letter-spacing: -0.02em;
+  font-weight: 700;
+  letter-spacing: -0.03em;
 }
 
 .type-heading-l {
   font-family: var(--font-sans);
-  font-weight: 650;
   font-size: 24px;
   line-height: 30px;
-  letter-spacing: -0.01em;
+  font-weight: 650;
+  letter-spacing: -0.02em;
 }
 
 .type-body-l {
   font-family: var(--font-sans);
-  font-weight: 500;
   font-size: 17px;
   line-height: 28px;
+  font-weight: 500;
 }
 
 .type-body-m {
   font-family: var(--font-sans);
-  font-weight: 500;
   font-size: 16px;
   line-height: 26px;
+  font-weight: 500;
 }
 
 .type-body-s {
   font-family: var(--font-sans);
-  font-weight: 500;
   font-size: 14px;
   line-height: 22px;
+  font-weight: 500;
 }
 
 .type-label {
   font-family: var(--font-sans);
-  font-weight: 700;
   font-size: 12px;
   line-height: 16px;
+  font-weight: 700;
   letter-spacing: 0.18em;
   text-transform: uppercase;
 }
@@ -133,18 +154,22 @@ a {
     font-size: 48px;
     line-height: 52px;
   }
+
   .type-display-l {
     font-size: 40px;
     line-height: 46px;
   }
+
   .type-heading-xl {
     font-size: 32px;
     line-height: 38px;
   }
+
   .type-heading-l {
     font-size: 26px;
     line-height: 32px;
   }
+
   .type-body-l {
     font-size: 18px;
     line-height: 30px;
@@ -156,21 +181,22 @@ a {
     font-size: 64px;
     line-height: 68px;
   }
+
   .type-display-l {
     font-size: 48px;
     line-height: 52px;
   }
+
   .type-heading-xl {
     font-size: 36px;
     line-height: 42px;
   }
+
   .type-heading-l {
     font-size: 28px;
     line-height: 34px;
   }
 }
-
-/* ── Base ────────────────────────────────────────────────────── */
 
 @layer base {
   :focus-visible {
@@ -191,82 +217,69 @@ a {
   }
 }
 
-/* ── Component Classes ───────────────────────────────────────── */
-
 @layer components {
   .panel-soft {
-    @apply rounded-panel bg-[rgba(255,253,248,0.88)] border border-border shadow-soft backdrop-blur-md;
+    @apply rounded-panel border border-border bg-[rgba(255,250,242,0.84)] shadow-soft backdrop-blur-md;
   }
+
   .panel-operational {
-    @apply rounded-panel bg-paper border border-border shadow-operation;
+    @apply rounded-panel border border-border bg-[rgba(255,250,242,0.94)] shadow-operation;
   }
+
   .panel-glass {
-    @apply rounded-panel border border-white/20 bg-white/10 shadow-elevated backdrop-blur-xl;
+    @apply rounded-panel border border-white/20 bg-white/12 shadow-elevated backdrop-blur-xl;
   }
 
   .btn-primary {
-    @apply h-12 px-7 rounded-pill bg-accent text-white font-semibold
-           shadow-cta transition-all duration-200 ease-out
-           hover:shadow-cta-hover hover:-translate-y-[2px] hover:brightness-110
-           active:translate-y-0 active:shadow-cta
-           focus:outline-none;
+    @apply h-12 rounded-pill bg-accent px-7 text-white shadow-cta transition-all duration-150 ease-out hover:-translate-y-[2px] hover:shadow-cta-hover hover:brightness-105 active:translate-y-0 active:shadow-cta focus:outline-none;
+    font-weight: 700;
   }
+
   .btn-secondary {
-    @apply h-12 px-7 rounded-pill border border-border bg-paper text-ink font-semibold
-           shadow-sm transition-all duration-200 ease-out
-           hover:shadow-md hover:-translate-y-[1px] hover:bg-[rgba(15,23,42,0.02)]
-           active:translate-y-0
-           focus:outline-none;
+    @apply h-12 rounded-pill border border-border bg-paper px-7 text-ink shadow-sm transition-all duration-150 ease-out hover:-translate-y-[1px] hover:bg-[rgba(18,57,54,0.03)] hover:shadow-md active:translate-y-0 focus:outline-none;
+    font-weight: 700;
   }
+
   .btn-tertiary {
-    @apply h-12 px-5 rounded-pill text-ink/70 font-semibold
-           transition-colors duration-200 ease-out
-           hover:text-ink hover:bg-ink/[0.04]
-           focus:outline-none;
+    @apply h-12 rounded-pill px-5 text-ink/72 transition-colors duration-150 ease-out hover:bg-ink/[0.04] hover:text-ink focus:outline-none;
+    font-weight: 700;
   }
 
   .status-chip {
-    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-border
-           px-3.5 py-0.5 text-xs font-bold uppercase tracking-[0.14em] text-ink/70;
+    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-border px-3.5 py-0.5 text-xs uppercase tracking-[0.14em] text-ink/70;
+    font-weight: 700;
   }
+
   .status-chip-accent {
-    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill
-           px-3.5 py-0.5 text-xs font-bold uppercase tracking-[0.14em]
-           border border-accent/30 bg-accent-soft/60 text-accent;
+    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-accent/25 bg-accent-soft/75 px-3.5 py-0.5 text-xs uppercase tracking-[0.14em] text-accent;
+    font-weight: 700;
   }
+
   .status-chip-success {
-    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill
-           px-3.5 py-0.5 text-xs font-bold uppercase tracking-[0.14em]
-           border border-success/25 bg-success/10 text-success;
+    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-success/25 bg-success/10 px-3.5 py-0.5 text-xs uppercase tracking-[0.14em] text-success;
+    font-weight: 700;
   }
+
   .status-chip-warm {
-    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill
-           px-3.5 py-0.5 text-xs font-bold uppercase tracking-[0.14em]
-           border border-warm/25 bg-warm/10 text-warm;
+    @apply inline-flex min-h-8 items-center gap-1.5 rounded-pill border border-brass/25 bg-brass-soft/80 px-3.5 py-0.5 text-xs uppercase tracking-[0.14em] text-brass;
+    font-weight: 700;
   }
 
   .input-field {
-    @apply w-full h-12 rounded-control border border-border/60 bg-paper
-           px-4 text-[15px] font-medium text-ink shadow-sm outline-none
-           transition-all duration-200
-           focus:border-accent/40 focus:ring-2 focus:ring-accent/12 focus:shadow-md;
+    @apply h-12 w-full rounded-control border border-border/70 bg-paper px-4 text-[15px] text-ink shadow-sm outline-none transition-all duration-150 focus:border-accent/45 focus:ring-2 focus:ring-accent/10 focus:shadow-md;
+    font-weight: 500;
   }
 
   .select-field {
-    @apply w-full h-12 rounded-control border border-border/60 bg-paper
-           px-4 text-[15px] font-medium text-ink shadow-sm outline-none
-           appearance-none cursor-pointer
-           transition-all duration-200
-           hover:border-accent/30 hover:shadow-md
-           focus:border-accent/40 focus:ring-2 focus:ring-accent/12;
-    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%231E1B16' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.4'/%3E%3C/svg%3E");
+    @apply h-12 w-full appearance-none rounded-control border border-border/70 bg-paper px-4 text-[15px] text-ink shadow-sm outline-none transition-all duration-150 hover:border-accent/30 hover:shadow-md focus:border-accent/45 focus:ring-2 focus:ring-accent/10;
+    background-image: url("data:image/svg+xml,%3Csvg width='12' height='8' viewBox='0 0 12 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1.5L6 6.5L11 1.5' stroke='%23171610' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round' opacity='0.42'/%3E%3C/svg%3E");
     background-repeat: no-repeat;
     background-position: right 14px center;
     padding-right: 36px;
+    cursor: pointer;
+    font-weight: 500;
   }
 }
-
-/* ── Utility Animations ──────────────────────────────────────── */
 
 @layer utilities {
   @keyframes rv-fade-up {
@@ -274,6 +287,7 @@ a {
       opacity: 0;
       transform: translateY(16px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -284,6 +298,7 @@ a {
     from {
       opacity: 0;
     }
+
     to {
       opacity: 1;
     }
@@ -294,8 +309,9 @@ a {
     100% {
       opacity: 0.45;
     }
+
     50% {
-      opacity: 0.75;
+      opacity: 0.78;
     }
   }
 
@@ -304,6 +320,7 @@ a {
       opacity: 0;
       transform: translateY(24px);
     }
+
     to {
       opacity: 1;
       transform: translateY(0);
@@ -329,12 +346,15 @@ a {
   .animation-delay-100 {
     animation-delay: 100ms;
   }
+
   .animation-delay-200 {
     animation-delay: 200ms;
   }
+
   .animation-delay-300 {
     animation-delay: 300ms;
   }
+
   .animation-delay-400 {
     animation-delay: 400ms;
   }

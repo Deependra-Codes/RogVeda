@@ -28,7 +28,7 @@ const hasE2eTests = listFiles("tests/e2e", [".js", ".jsx", ".ts", ".tsx"]).some(
 );
 
 if (hasNext && hasRoutes) {
-  run("pnpm", ["exec", "next", "build"], { failureMessage: "next build failed" });
+  run("pnpm", ["build"], { failureMessage: "next build failed" });
   assertRouteJsBudgets();
 } else {
   console.log("Repo check: skipped Next build because app runtime is not scaffolded yet.");

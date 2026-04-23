@@ -30,8 +30,10 @@ Hosted Supabase is the canonical runtime for deployment and submission once cred
 - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
 - `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 - `SUPABASE_SERVICE_ROLE_KEY`
+- `ROGVEDA_SESSION_SECRET`
 
 The app uses the same keys in local, CI, and hosted environments. Read-only server slices can fall back to the publishable key when the service-role key is absent, but booking confirmation, vendor auth, and task completion require `SUPABASE_SERVICE_ROLE_KEY`.
+Vendor sessions and booking-confirmation access also require `ROGVEDA_SESSION_SECRET` so signed cookies can be created and verified consistently across local, CI, and Vercel.
 
 ## Deployment Notes
 

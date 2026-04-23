@@ -8,6 +8,33 @@ export function ServiceWorkerRegister() {
       return;
     }
 
+    const isLocalhost =
+      window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1";
+
+    if (isLocalhost) {
+      void navigator.serviceWorker
+        .getRegistrations()
+        .then((registrations) =>
+          Promise.all(registrations.map((registration) => registration.unregister())),
+        )
+        .catch(() => {});
+
+      if ("caches" in window) {
+        void caches
+          .keys()
+          .then((cacheKeys) =>
+            Promise.all(
+              cacheKeys
+                .filter((cacheKey) => cacheKey.startsWith("rogveda-shell-"))
+                .map((cacheKey) => caches.delete(cacheKey)),
+            ),
+          )
+          .catch(() => {});
+      }
+
+      return;
+    }
+
     const registerServiceWorker = () => {
       void navigator.serviceWorker.register("/sw.js").catch(() => {});
     };

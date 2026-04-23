@@ -66,7 +66,9 @@ export function VendorBookingTaskPanel({
   return (
     <section
       className={`flex flex-col border-t p-5 sm:p-6 lg:border-l lg:border-t-0 ${
-        isPending ? "border-accent/15 bg-accent/[0.04]" : "border-border bg-bg/30"
+        isPending
+          ? "border-accent/15 bg-[linear-gradient(180deg,rgba(216,236,232,0.68),rgba(216,236,232,0.34))]"
+          : "border-border bg-[linear-gradient(180deg,rgba(255,250,242,0.72),rgba(228,236,232,0.2))]"
       }`}
     >
       <div className="mb-3 flex items-center gap-2">

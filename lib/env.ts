@@ -5,6 +5,7 @@ const serverEnvSchema = z.object({
   NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: z.string().min(1).optional(),
   NEXT_PUBLIC_SUPABASE_ANON_KEY: z.string().min(1).optional(),
   SUPABASE_SERVICE_ROLE_KEY: z.string().min(1).optional(),
+  ROGVEDA_SESSION_SECRET: z.string().min(1).optional(),
 });
 
 type RawServerEnv = z.infer<typeof serverEnvSchema>;
@@ -34,6 +35,7 @@ function rawServerEnv() {
     NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY,
     NEXT_PUBLIC_SUPABASE_ANON_KEY: process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY,
     SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+    ROGVEDA_SESSION_SECRET: process.env.ROGVEDA_SESSION_SECRET,
   };
 }
 
@@ -101,6 +103,15 @@ export function getSupabaseWriteEnvIssues() {
   }
 
   return issues;
+}
+
+export function getRogvedaSessionSecret() {
+  const secret = rawServerEnv().ROGVEDA_SESSION_SECRET;
+  return typeof secret === "string" && secret.length > 0 ? secret : null;
+}
+
+export function getRogvedaSessionSecretIssues() {
+  return getRogvedaSessionSecret() ? [] : (["ROGVEDA_SESSION_SECRET"] as const);
 }
 
 function resolveSupabaseKey(env: RawServerEnv | RawServerEnvInput) {

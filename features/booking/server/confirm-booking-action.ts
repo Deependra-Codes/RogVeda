@@ -11,6 +11,7 @@ import {
   buildBookingRoute,
   parseConfirmBookingPayload,
 } from "../types/contracts";
+import { grantBookingConfirmationAccess } from "./confirmation-access";
 
 export async function confirmBookingAction(formData: FormData) {
   const parsed = parseConfirmBookingPayload(formData);
@@ -56,6 +57,11 @@ export async function confirmBookingAction(formData: FormData) {
           : "booking_failed",
       ),
     );
+  }
+
+  const didGrantConfirmationAccess = await grantBookingConfirmationAccess(data.booking_id);
+  if (!didGrantConfirmationAccess) {
+    redirect(buildBookingRoute(parsed.data, "service_unavailable"));
   }
 
   redirect(buildBookingConfirmationRoute(data.booking_id, parsed.data.currency));

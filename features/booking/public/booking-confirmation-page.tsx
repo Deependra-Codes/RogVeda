@@ -29,6 +29,17 @@ export async function BookingConfirmationPage({
     );
   }
 
+  if (state.kind === "unauthorized") {
+    return (
+      <BookingPageFrame>
+        <BookingStatePanel
+          title="Confirmation access expired."
+          body="This confirmation can only be opened in the same browser that completed the booking. Please confirm again from search if you still need the record."
+        />
+      </BookingPageFrame>
+    );
+  }
+
   if (state.kind === "unconfigured") {
     return (
       <BookingPageFrame>

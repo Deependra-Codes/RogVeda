@@ -46,14 +46,14 @@ function PatientSearchToolbar({
 
   return (
     <motion.div
-      className="panel-soft sticky top-3 z-20 flex flex-col gap-5 px-5 py-4 sm:static sm:px-7 sm:py-6 lg:flex-row lg:items-center lg:justify-between"
+      className="panel-soft sticky top-3 z-20 flex flex-col gap-5 bg-[rgba(255,250,242,0.92)] px-5 py-4 sm:static sm:px-7 sm:py-6 lg:flex-row lg:items-center lg:justify-between"
       initial={shouldReduceMotion ? false : { opacity: 0, y: 14 }}
       animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
       transition={shouldReduceMotion ? undefined : { duration: 0.4, ease: "easeOut" }}
     >
       <div className="max-w-[620px]">
         <div className="flex flex-wrap items-center gap-3">
-          <p className="type-label text-ink/50">Live Comparison</p>
+          <p className="type-label text-accent/72">Live Comparison</p>
           <span className="status-chip">Guest Browsing</span>
         </div>
         <h2 className="mt-3 type-heading-l text-ink">

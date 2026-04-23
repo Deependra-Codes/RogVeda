@@ -6,13 +6,13 @@ type SearchRouteIntroProps = Readonly<{
 
 export function SearchRouteIntro({ hospitalCount }: SearchRouteIntroProps) {
   const title = hospitalCount
-    ? `${hospitalCount} partner hospitals are ready to compare.`
+    ? `${hospitalCount} partner hospitals ready for a clean side-by-side decision.`
     : "Shortlist hospitals with clarity before you commit.";
 
   return (
     <section className="grid gap-6 lg:grid-cols-12 lg:gap-8">
       <div className="lg:col-span-5">
-        <p className="type-label text-ink/45">Treatment Shortlist</p>
+        <p className="type-label text-brass/80">Treatment Shortlist</p>
         <h2 className="mt-3 type-display-l max-w-[13ch] text-ink">{title}</h2>
         <p className="mt-5 max-w-[56ch] type-body-l text-ink/68">
           Every option keeps the same decision frame in view: surgeon, room, transparent estimate,
@@ -46,8 +46,8 @@ export function SearchRouteIntro({ hospitalCount }: SearchRouteIntroProps) {
 export function SearchRouteFooter() {
   return (
     <section className="grid gap-6 lg:grid-cols-12 lg:gap-8">
-      <div className="panel-soft overflow-hidden p-6 sm:p-8 lg:col-span-8">
-        <p className="type-label text-ink/45">What Happens Next</p>
+      <div className="panel-soft overflow-hidden bg-[linear-gradient(180deg,rgba(255,250,242,0.92),rgba(241,228,209,0.42))] p-6 sm:p-8 lg:col-span-8">
+        <p className="type-label text-brass/78">What Happens Next</p>
         <h2 className="mt-3 type-heading-xl max-w-[18ch] text-ink">
           Once you choose, the booking route becomes a calm proof step.
         </h2>
@@ -71,9 +71,9 @@ export function SearchRouteFooter() {
         </div>
       </div>
 
-      <aside className="panel-operational flex flex-col justify-between gap-5 p-6 sm:p-8 lg:col-span-4">
+      <aside className="panel-operational flex flex-col justify-between gap-5 bg-[rgba(228,236,232,0.54)] p-6 sm:p-8 lg:col-span-4">
         <div>
-          <p className="type-label text-ink/45">Connected Demo</p>
+          <p className="type-label text-accent/72">Connected Demo</p>
           <h3 className="mt-3 type-heading-l max-w-[12ch] text-ink">
             Patient and vendor views stay on one source of truth.
           </h3>

@@ -25,7 +25,10 @@ export async function vendorLoginAction(formData: FormData) {
     redirect(buildVendorLoginRoute("service_unavailable"));
   }
 
-  await setVendorSession(authResult.vendor);
+  const didSetSession = await setVendorSession(authResult.vendor);
+  if (!didSetSession) {
+    redirect(buildVendorLoginRoute("service_unavailable"));
+  }
 
   redirect(
     buildVendorDashboardRoute({

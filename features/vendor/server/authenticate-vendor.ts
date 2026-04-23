@@ -2,12 +2,13 @@ import { getSupabaseWriteEnvIssues } from "@/lib/env";
 import { getSupabaseWriteClient } from "@/supabase/clients/server";
 
 import { type VendorLoginPayload, vendorDemoCredentials } from "../types/contracts";
+import { verifyVendorPassword } from "./password-hash";
 import type { VendorSessionPayload } from "./session-token";
 
 type VendorRow = {
   id: string;
   username: string;
-  password: string;
+  password_hash: string;
   display_name: string;
 };
 
@@ -29,7 +30,7 @@ export type VendorAuthResult =
     };
 
 export async function authenticateVendor(payload: VendorLoginPayload): Promise<VendorAuthResult> {
-  if (!matchesDemoCredentials(payload)) {
+  if (!isDemoUsername(payload.username)) {
     return { kind: "invalid_credentials" };
   }
 
@@ -45,9 +46,8 @@ export async function authenticateVendor(payload: VendorLoginPayload): Promise<V
 
   const { data, error } = await client
     .from("vendors")
-    .select("id,username,password,display_name")
+    .select("id,username,password_hash,display_name")
     .eq("username", vendorDemoCredentials.username)
-    .eq("password", vendorDemoCredentials.password)
     .maybeSingle();
 
   if (error) {
@@ -59,7 +59,7 @@ export async function authenticateVendor(payload: VendorLoginPayload): Promise<V
   }
 
   const vendor = data as VendorRow | null;
-  if (!vendor) {
+  if (!vendor || !verifyVendorPassword(payload.password, vendor.password_hash)) {
     return { kind: "invalid_credentials" };
   }
 
@@ -73,9 +73,6 @@ export async function authenticateVendor(payload: VendorLoginPayload): Promise<V
   };
 }
 
-function matchesDemoCredentials(payload: VendorLoginPayload) {
-  return (
-    payload.username.trim().toLowerCase() === vendorDemoCredentials.username &&
-    payload.password === vendorDemoCredentials.password
-  );
+function isDemoUsername(username: string) {
+  return username.trim().toLowerCase() === vendorDemoCredentials.username;
 }

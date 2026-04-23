@@ -1,21 +1,20 @@
-const CACHE_NAME = "rogveda-shell-v1";
-const SHELL_ROUTES = [
-  "/",
-  "/vendor/login",
+const CACHE_NAME = "rogveda-shell-v2";
+const NAVIGATION_ROUTES = new Set(["/", "/vendor/login"]);
+const CACHEABLE_ASSETS = new Set([
   "/manifest.webmanifest",
   "/favicon.svg",
   "/icon-192.png",
   "/icon-512.png",
   "/icon-maskable-512.png",
   "/apple-touch-icon.png",
-];
-const STATIC_DESTINATIONS = new Set(["font", "image", "script", "style"]);
+]);
+const STATIC_DESTINATIONS = new Set(["font", "image"]);
 
 self.addEventListener("install", (event) => {
   event.waitUntil(
     caches
       .open(CACHE_NAME)
-      .then((cache) => cache.addAll(SHELL_ROUTES))
+      .then((cache) => cache.addAll([...NAVIGATION_ROUTES, ...CACHEABLE_ASSETS]))
       .then(() => self.skipWaiting()),
   );
 });
@@ -44,18 +43,19 @@ self.addEventListener("fetch", (event) => {
 
   if (
     url.pathname.startsWith("/api") ||
+    url.pathname.startsWith("/_next") ||
     url.pathname.startsWith("/booking") ||
     url.pathname.startsWith("/vendor/dashboard")
   ) {
     return;
   }
 
-  if (request.mode === "navigate" && SHELL_ROUTES.includes(url.pathname)) {
+  if (request.mode === "navigate" && NAVIGATION_ROUTES.has(url.pathname)) {
     event.respondWith(networkFirst(request));
     return;
   }
 
-  if (STATIC_DESTINATIONS.has(request.destination) || SHELL_ROUTES.includes(url.pathname)) {
+  if (STATIC_DESTINATIONS.has(request.destination) || CACHEABLE_ASSETS.has(url.pathname)) {
     event.respondWith(staleWhileRevalidate(request));
   }
 });
@@ -65,7 +65,9 @@ async function networkFirst(request) {
 
   try {
     const response = await fetch(request);
-    cache.put(request, response.clone());
+    if (response.ok) {
+      cache.put(request, response.clone());
+    }
     return response;
   } catch {
     return cache.match(request) ?? Response.error();
@@ -77,7 +79,9 @@ async function staleWhileRevalidate(request) {
   const cachedResponse = await cache.match(request);
   const networkResponsePromise = fetch(request)
     .then((response) => {
-      cache.put(request, response.clone());
+      if (response.ok) {
+        cache.put(request, response.clone());
+      }
       return response;
     })
     .catch(() => null);

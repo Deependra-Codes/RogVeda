@@ -33,11 +33,11 @@ export function HospitalSelectionControls({
   onRoomChange,
 }: HospitalSelectionControlsProps) {
   return (
-    <div className="flex flex-col justify-center gap-5 border-t border-border bg-bg/30 p-5 lg:col-span-3 lg:border-r lg:border-t-0 lg:p-6">
-      <div>
-        <p className="type-label text-ink/45">Customize Quote</p>
-        <p className="mt-2 type-body-s text-ink/60">
-          Switch surgeon and room type to compare the care pathway that fits you best.
+    <div className="flex flex-col justify-center gap-5 border-t border-border bg-[rgba(228,236,232,0.45)] p-5 lg:col-span-3 lg:border-r lg:border-t-0 lg:p-6">
+      <div className="space-y-2">
+        <p className="type-label text-ink/45">Refine Selection</p>
+        <p className="type-body-s text-ink/60">
+          Compare the surgeon and room pathway that fits the patient profile best.
         </p>
       </div>
 
@@ -83,7 +83,7 @@ export function HospitalPricePanel({
   shouldReduceMotion,
 }: HospitalPricePanelProps) {
   return (
-    <div className="flex flex-col gap-5 border-t border-border bg-paper p-5 lg:col-span-2 lg:justify-center lg:border-t-0 lg:p-6">
+    <div className="flex flex-col gap-5 border-t border-border bg-[linear-gradient(180deg,rgba(255,250,242,0.96),rgba(241,228,209,0.38))] p-5 lg:col-span-2 lg:justify-center lg:border-t-0 lg:p-6">
       <HospitalPriceSummary
         currency={currency}
         selectedPriceUsdCents={selectedPriceUsdCents}
@@ -133,12 +133,12 @@ function HospitalPriceSummary({
   shouldReduceMotion,
 }: Omit<HospitalPricePanelProps, "bookingHref">) {
   return (
-    <div>
-      <p className="type-label mb-1.5 text-ink/45">Estimate</p>
+    <div data-testid="hospital-price-panel">
+      <p className="type-label mb-1.5 text-brass/75">Live Estimate</p>
       <AnimatePresence mode="wait" initial={false}>
         <motion.h3
           key={`${selectedPriceUsdCents}-${currency}`}
-          className="text-[26px] font-bold tracking-tight text-ink sm:text-[30px]"
+          className="text-[28px] font-bold tracking-tight text-ink sm:text-[32px]"
           initial={shouldReduceMotion ? false : { opacity: 0, y: 8 }}
           animate={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
           exit={shouldReduceMotion ? undefined : { opacity: 0, y: -8 }}

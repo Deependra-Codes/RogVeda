@@ -9,8 +9,12 @@ truncate table
   public.vendors
 restart identity cascade;
 
-insert into public.vendors (username, password, display_name)
-values ('apollo', 'apollo123', 'Apollo International Desk');
+insert into public.vendors (username, password_hash, display_name)
+values (
+  'apollo',
+  'scrypt$abf3e45870dfae49433a0ac7b4aeac53$4cdc21f7c9deb7adf4983371b25d458440e74964f8b6c84f7ea0aaf1fa132574895ba6aec62a9ebf9f25baf44bacad530744de639533e3cf546d873900a5a337',
+  'Apollo International Desk'
+);
 
 insert into public.hospitals (
   vendor_id,

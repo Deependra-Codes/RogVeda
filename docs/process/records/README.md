@@ -20,6 +20,7 @@ This directory stores the durable artifacts that back non-trivial changes.
 - `intents/frontend-render-server-brain.md`
 - `intents/next-app-scaffold.md`
 - `intents/patient-search-supabase-foundation.md`
+- `intents/premium-ui-auth-hardening-redeploy-pass.md`
 - `intents/pre-ui-release-baseline.md`
 - `intents/repo-wide-performance-hardening.md`
 - `intents/supabase-rls-access-hardening.md`
@@ -31,6 +32,7 @@ This directory stores the durable artifacts that back non-trivial changes.
 - `specs/frontend-render-server-brain.md`
 - `specs/next-app-scaffold.md`
 - `specs/patient-search-supabase-foundation.md`
+- `specs/premium-ui-auth-hardening-redeploy-pass.md`
 - `specs/pre-ui-release-baseline.md`
 - `specs/repo-wide-performance-hardening.md`
 - `specs/supabase-rls-access-hardening.md`
@@ -42,6 +44,7 @@ This directory stores the durable artifacts that back non-trivial changes.
 - `research/frontend-render-server-brain.md`
 - `research/next-app-scaffold.md`
 - `research/patient-search-supabase-foundation.md`
+- `research/premium-ui-auth-hardening-redeploy-pass.md`
 - `research/pre-ui-release-baseline.md`
 - `research/repo-wide-performance-hardening.md`
 - `research/supabase-rls-access-hardening.md`
@@ -52,6 +55,7 @@ This directory stores the durable artifacts that back non-trivial changes.
 - `validations/frontend-render-server-brain.md`
 - `validations/next-app-scaffold.md`
 - `validations/patient-search-supabase-foundation.md`
+- `validations/premium-ui-auth-hardening-redeploy-pass.md`
 - `validations/pre-ui-release-baseline.md`
 - `validations/repo-wide-performance-hardening.md`
 - `validations/supabase-rls-access-hardening.md`

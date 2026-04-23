@@ -1,6 +1,8 @@
 import { afterEach, describe, expect, it } from "vitest";
 
 import {
+  getRogvedaSessionSecret,
+  getRogvedaSessionSecretIssues,
   getSupabaseReadEnv,
   getSupabaseReadEnvIssues,
   getSupabaseWriteEnv,
@@ -12,6 +14,7 @@ const trackedEnvKeys = [
   "NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY",
   "NEXT_PUBLIC_SUPABASE_ANON_KEY",
   "SUPABASE_SERVICE_ROLE_KEY",
+  "ROGVEDA_SESSION_SECRET",
 ] as const;
 
 const originalEnv = Object.fromEntries(trackedEnvKeys.map((key) => [key, process.env[key]]));
@@ -81,5 +84,19 @@ describe("server env", () => {
       "NEXT_PUBLIC_SUPABASE_ANON_KEY",
       "SUPABASE_SERVICE_ROLE_KEY",
     ]);
+  });
+
+  it("reads the dedicated session secret separately from Supabase env checks", () => {
+    process.env.ROGVEDA_SESSION_SECRET = "session-secret";
+
+    expect(getRogvedaSessionSecret()).toBe("session-secret");
+    expect(getRogvedaSessionSecretIssues()).toEqual([]);
+  });
+
+  it("reports the missing session secret cleanly", () => {
+    Reflect.deleteProperty(process.env, "ROGVEDA_SESSION_SECRET");
+
+    expect(getRogvedaSessionSecret()).toBeNull();
+    expect(getRogvedaSessionSecretIssues()).toEqual(["ROGVEDA_SESSION_SECRET"]);
   });
 });

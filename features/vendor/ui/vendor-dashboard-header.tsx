@@ -10,7 +10,7 @@ export function VendorDashboardHeader({ vendorName, logoutAction }: VendorDashbo
     <section className="flex flex-wrap items-end justify-between gap-5 border-b border-border pb-6 pt-2">
       <div className="max-w-[560px]">
         <div className="mb-2 flex items-center gap-3">
-          <p className="type-label text-ink/45">Vendor Operations</p>
+          <p className="type-label text-accent/72">Vendor Operations</p>
           <div className="status-chip-accent text-[10px]">Active</div>
         </div>
         <h1 className="type-heading-xl text-ink">{vendorName}</h1>

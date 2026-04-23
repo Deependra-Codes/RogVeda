@@ -1,18 +1,22 @@
+import { experienceVisuals } from "@/lib/experience-visuals";
+
 export function BookingReviewHero() {
+  const bookingVisual = experienceVisuals.bookingReview;
+
   return (
     <section className="relative overflow-hidden rounded-[32px] border border-border bg-paper">
-      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,118,110,0.08),transparent_36%),radial-gradient(circle_at_bottom_right,rgba(180,83,9,0.08),transparent_34%)]" />
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(15,109,104,0.07),transparent_34%),radial-gradient(circle_at_bottom_right,rgba(162,103,34,0.08),transparent_36%)]" />
 
       <div className="relative grid lg:grid-cols-12">
         <div className="p-6 sm:p-10 lg:col-span-7 lg:p-12">
-          <p className="type-label text-accent/70">Booking Review</p>
+          <p className="type-label text-brass/75">Booking Review</p>
           <h1 className="mt-3 type-heading-xl max-w-[16ch] text-ink">
-            Review the exact treatment and wallet impact before confirming.
+            Review the selected treatment with the wallet impact made explicit.
           </h1>
           <p className="mt-4 max-w-[56ch] type-body-m text-ink/68">
-            This step stays deliberately calm: the final quote is rechecked on the server, the
-            wallet movement is made explicit, and the vendor handoff remains part of the same
-            connected workflow.
+            This route is a proof step, not a flourish. The quote is checked again on the server,
+            the balance movement stays visible, and the same record flows directly into vendor
+            coordination.
           </p>
 
           <div className="mt-8 grid gap-3 sm:grid-cols-3">
@@ -31,21 +35,18 @@ export function BookingReviewHero() {
           </div>
         </div>
 
-        <div className="relative min-h-[240px] border-t border-border lg:col-span-5 lg:border-l lg:border-t-0">
+        <div className="relative min-h-[260px] border-t border-border lg:col-span-5 lg:border-l lg:border-t-0">
           <div
             className="absolute inset-0 bg-cover bg-center"
-            style={{
-              backgroundImage:
-                "url('https://images.unsplash.com/photo-1584515933487-779824d29309?q=80&w=1200&auto=format&fit=crop')",
-            }}
+            style={{ backgroundImage: `url('${bookingVisual.imageSrc}')` }}
           />
-          <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,27,22,0.08),rgba(30,27,22,0.62))]" />
+          <div className={`absolute inset-0 ${bookingVisual.toneClass}`} />
           <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-            <div className="rounded-control border border-white/15 bg-ink/55 px-4 py-4 backdrop-blur-xl">
-              <p className="type-label text-white/55">Same Source Of Truth</p>
+            <div className="rounded-control border border-white/12 bg-[rgba(18,57,54,0.58)] px-4 py-4 text-white backdrop-blur-xl">
+              <p className="type-label text-white/56">Same Source Of Truth</p>
               <p className="mt-2 text-[14px] leading-6 text-white/84">
-                After confirmation, the vendor operations route sees this same booking and the first
-                travel task without any manual sync step.
+                After confirmation, the vendor workspace sees this same booking and the first travel
+                task without any manual sync step.
               </p>
             </div>
           </div>
@@ -76,7 +77,7 @@ export function BookingReviewSupportStrip() {
 
 function IntroProof({ title, body }: Readonly<{ title: string; body: string }>) {
   return (
-    <div className="rounded-control border border-border/80 bg-paper/72 px-4 py-4">
+    <div className="rounded-control border border-border/80 bg-paper/76 px-4 py-4">
       <p className="text-[15px] font-semibold leading-6 text-ink">{title}</p>
       <p className="mt-2 type-body-s text-ink/62">{body}</p>
     </div>

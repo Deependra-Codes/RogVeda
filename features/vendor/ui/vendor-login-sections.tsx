@@ -1,27 +1,28 @@
 import Link from "next/link";
 
+import { experienceVisuals } from "@/lib/experience-visuals";
+
 import { vendorDemoCredentials } from "../types/contracts";
 
 export function VendorLoginVisualPanel() {
+  const vendorVisual = experienceVisuals.vendorLogin;
+
   return (
-    <div className="relative min-h-[240px] border-b border-border lg:col-span-5 lg:min-h-[720px] lg:border-b-0 lg:border-r">
+    <div className="relative min-h-[280px] border-b border-border bg-anchor lg:col-span-5 lg:min-h-[720px] lg:border-b-0 lg:border-r">
       <div
         className="absolute inset-0 bg-cover bg-center"
-        style={{
-          backgroundImage:
-            "url('https://images.unsplash.com/photo-1576091160550-2173dba999ef?q=80&w=1200&auto=format&fit=crop')",
-        }}
+        style={{ backgroundImage: `url('${vendorVisual.imageSrc}')` }}
       />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(30,27,22,0.14),rgba(30,27,22,0.62))]" />
+      <div className={`absolute inset-0 ${vendorVisual.toneClass}`} />
       <div className="absolute inset-x-0 bottom-0 p-6 sm:p-8">
-        <div className="rounded-control border border-white/15 bg-ink/55 px-4 py-4 backdrop-blur-xl">
-          <p className="type-label text-white/55">Operations Portal</p>
+        <div className="rounded-control border border-white/12 bg-[rgba(18,57,54,0.54)] px-4 py-4 text-white backdrop-blur-xl">
+          <p className="type-label text-white/56">Operations Portal</p>
           <h2 className="mt-3 text-[22px] font-semibold leading-[28px] text-white">
-            Quiet entry point into the same booking workflow.
+            Quiet entry into the same booking workflow the patient just created.
           </h2>
           <p className="mt-3 text-[14px] leading-6 text-white/82">
-            The vendor view is intentionally operational, but it reads the same persisted booking
-            source the patient confirmation route writes to.
+            This route stays operational on purpose. It picks up the same saved booking and the same
+            first coordination task without a separate system.
           </p>
         </div>
       </div>
@@ -46,14 +47,7 @@ export function VendorLoginContent({
       <VendorLoginSupportPanels />
       <div className="mt-8">
         <Link href="/" className="btn-tertiary inline-flex items-center gap-1.5 text-sm">
-          <svg
-            width="14"
-            height="14"
-            viewBox="0 0 14 14"
-            fill="none"
-            aria-hidden="true"
-            className="opacity-60"
-          >
+          <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
             <path
               d="M9 3L5 7l4 4"
               stroke="currentColor"
@@ -72,13 +66,13 @@ export function VendorLoginContent({
 function VendorLoginIntro() {
   return (
     <div className="animate-rv-fade-up">
-      <p className="type-label text-ink/45">Vendor Login</p>
+      <p className="type-label text-accent/72">Vendor Login</p>
       <h1 className="mt-3 type-heading-xl max-w-[15ch] text-ink">
         Access the booking operations dashboard.
       </h1>
       <p className="mt-4 max-w-[540px] type-body-m text-ink/65">
-        Use the demo credential pair to review confirmed bookings and complete the first
-        coordination task in the connected trial workflow.
+        Use the demo credentials to review confirmed bookings and complete the first coordination
+        task in the connected trial workflow.
       </p>
     </div>
   );
@@ -107,7 +101,7 @@ function VendorLoginForm({
 function VendorLoginSupportPanels() {
   return (
     <div className="mt-8 grid gap-4 border-t border-border pt-6 lg:grid-cols-[minmax(0,1fr)_220px]">
-      <section className="rounded-control border border-border bg-bg/36 p-4 sm:p-5">
+      <section className="rounded-control border border-border bg-[rgba(228,236,232,0.42)] p-4 sm:p-5">
         <p className="type-label text-ink/45">Demo Credentials</p>
         <div className="mt-3 grid gap-3 sm:grid-cols-2">
           <CredentialItem label="Username" value={vendorDemoCredentials.username} />

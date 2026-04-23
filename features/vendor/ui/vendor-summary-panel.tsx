@@ -5,8 +5,8 @@ type VendorSummaryPanelProps = Readonly<{
 
 export function VendorSummaryPanel({ bookingCount, pendingTaskCount }: VendorSummaryPanelProps) {
   return (
-    <section className="panel-operational p-6 sm:p-7">
-      <p className="type-label text-ink/45">Workload Summary</p>
+    <section className="panel-operational bg-[linear-gradient(180deg,rgba(255,250,242,0.98),rgba(228,236,232,0.48))] p-6 sm:p-7">
+      <p className="type-label text-accent/72">Workload Summary</p>
       <p className="mt-3 type-body-s text-ink/62">
         This route reads the same persisted booking source as the patient confirmation flow. The
         summary stays intentionally compact so the queue remains the main workspace.

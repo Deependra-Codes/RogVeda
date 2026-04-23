@@ -37,6 +37,7 @@ export function HospitalResultInteractivePanel({ hospital }: HospitalResultInter
       className="overflow-hidden rounded-panel border border-border bg-paper shadow-elevated lg:grid lg:grid-cols-12"
       initial={shouldReduceMotion ? false : { opacity: 0, y: 24 }}
       whileInView={shouldReduceMotion ? undefined : { opacity: 1, y: 0 }}
+      whileHover={shouldReduceMotion ? undefined : { y: -2 }}
       viewport={{ once: true, amount: 0.15 }}
       transition={shouldReduceMotion ? undefined : { duration: 0.5, ease: "easeOut" }}
     >

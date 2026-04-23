@@ -11,9 +11,9 @@ Status key:
 
 ## Current Snapshot
 
-- Overall status: `[/] The UI bible implementation is live in the codebase, the hosted runtime is public and working, and human mobile QA plus GitHub secret mirroring are the remaining blockers before submission`
+- Overall status: `[/] The premium UI + auth hardening + redeploy pass is complete in code, green locally, and verified on the live Vercel app; the remaining blocker before fully closing the slice is human mobile QA`
 - Last updated: `2026-04-23`
-- Current focus: `Complete human mobile QA, mirror hosted envs into GitHub Actions, and keep follow-up risks documented while UI work continues`
+- Current focus: `Close the final submission-adjacent gap with human mobile QA while keeping route-level patient auth and the homepage Lighthouse warning tracked as explicit follow-up work`
 
 ## Canonical Design Reference
 
@@ -134,7 +134,14 @@ Status key:
 - Added deterministic tests for currency formatting plus patient-search and vendor empty-state guidance without mutating seeded data.
 - Added installability basics with `app/manifest.ts`, branded icons in `public/`, a narrow `public/sw.js`, production-only service-worker registration from the root layout, and a no-cache header for the service worker file.
 - Rewired `.env.example`, `supabase/README.md`, and `.github/workflows/ci.yml` around the same hosted-ready Supabase env contract and made Playwright stop reusing stale local servers by default.
-- GitHub Actions secret access is still not available in this workspace, so the hosted envs were not mirrored into GitHub from here.
+- Added signed vendor-session cookies, hashed vendor credential verification, and same-browser booking-confirmation access while keeping guest search and booking review public.
+- Added the root `README.md` with setup, envs, live URL, vendor route, demo credentials, and direct submission-answer prompts.
+- Mirrored the hosted Supabase values plus `ROGVEDA_SESSION_SECRET` into GitHub Actions secrets for `Deependra-Codes/RogVeda`.
+- Fixed the homepage text-wrap and mobile dark/readability regressions, moved route imagery onto repo-local configurable assets, and made the service worker stop caching Next.js scripts or styles.
+- Found two truthfulness bugs while re-verifying the redesigned UI pass:
+  stale `next start --port 3200` processes could make local browser checks hit an older build than the one just compiled, and stale `.next` artifacts after local Supabase resets could preserve old hospital or doctor IDs inside the static homepage.
+- Fixed those verification traps by cleaning `.next` before every build, keeping Playwright on a dedicated port, unregistering Rogveda service workers on localhost, and rebuilding the local release path from a clean output directory.
+- Re-pushed the vendor-password migration and current seed hash to hosted Supabase, redeployed Vercel production, and re-ran a live browser probe that completed search -> booking -> confirmation -> vendor task completion on `https://project-feiuh.vercel.app`.
 
 ### 2026-04-22
 
@@ -175,4 +182,4 @@ Status key:
 - AI usage note:
   Used OpenAI Codex in the repo-native `Intent -> Research -> Spec -> Tests -> Implementation -> Verification` loop to refactor the route UI, preserve the working booking workflow, and verify the changes end to end instead of stopping at static mockups.
   The hardest part was keeping the live-release claims truthful while hosted deployment debugging crossed two layers: Supabase parity first, then a Vercel project that was quietly set to `framework: null` and producing a 404-only bundle.
-  The remaining work is human mobile QA and GitHub Actions secret mirroring rather than missing core product features.
+  The remaining work is human mobile QA rather than missing core product features.

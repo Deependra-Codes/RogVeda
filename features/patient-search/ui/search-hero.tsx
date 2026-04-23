@@ -1,134 +1,124 @@
 import Link from "next/link";
 
+import { experienceVisuals } from "@/lib/experience-visuals";
+
+const heroTrustPoints = [
+  {
+    title: "Transparent estimate",
+    body: "Doctor and room changes update instantly, with no hidden coordination fee.",
+  },
+  {
+    title: "Travel coordination",
+    body: "Visa invite, pickup, and stay planning are visible before the booking step.",
+  },
+  {
+    title: "Verified partner shortlist",
+    body: "Delhi and nearby NCR centers stay in one calm comparison flow.",
+  },
+] as const;
+
 export function SearchHero() {
+  const heroVisual = experienceVisuals.homeHero;
+
   return (
-    <section className="relative isolate flex w-full flex-col justify-end overflow-hidden bg-ink min-h-[620px] sm:min-h-[84svh] lg:min-h-[90svh]">
-      {/* Background image */}
-      <div className="absolute inset-0 -z-10">
-        <div
-          className="absolute inset-0 bg-cover bg-center bg-no-repeat scale-[1.02]"
-          style={{
-            backgroundImage:
-              "url('https://images.unsplash.com/photo-1519494026892-80bbd2d6fd0d?q=80&w=2200&auto=format&fit=crop')",
-          }}
-        />
-        {/* Scrim layers for text safety */}
-        <div
-          className="absolute inset-0 bg-gradient-to-t from-[rgba(30,27,22,0.92)] via-[rgba(30,27,22,0.45)] to-[rgba(30,27,22,0.15)]
-          sm:bg-gradient-to-r sm:from-[rgba(30,27,22,0.92)] sm:via-[rgba(30,27,22,0.55)] sm:to-[rgba(30,27,22,0.08)]"
-        />
-        <div className="absolute inset-0 bg-gradient-to-b from-[rgba(30,27,22,0.3)] via-transparent to-transparent" />
-      </div>
-
-      {/* Hero content */}
-      <div className="relative z-10 mx-auto flex h-full w-full max-w-[1280px] flex-col justify-end px-4 pb-10 pt-24 sm:px-6 sm:pb-16 lg:px-8 lg:pb-24">
-        <div className="max-w-[640px] animate-rv-fade-up">
-          <HeroLead />
-          <div className="hidden sm:block mt-10">
-            <HeroTrustStrip />
-          </div>
-        </div>
-      </div>
-
-      {/* Mobile trust strip */}
-      <div className="relative z-10 border-t border-white/10 bg-ink/80 px-4 py-5 backdrop-blur-lg sm:hidden">
-        <HeroTrustStrip mobile />
+    <section className="relative isolate min-h-[680px] overflow-hidden bg-anchor text-white sm:min-h-[88svh]">
+      <HeroBackground imageSrc={heroVisual.imageSrc} toneClass={heroVisual.toneClass} />
+      <div className="mx-auto flex min-h-[inherit] w-full max-w-[1280px] flex-col justify-between px-4 pb-5 pt-5 sm:px-6 sm:pb-8 sm:pt-8 lg:px-8 lg:pb-10">
+        <HeroTopBar />
+        <HeroContent />
+        <HeroTrustBand />
       </div>
     </section>
   );
 }
 
-function HeroLead() {
+function HeroBackground({
+  imageSrc,
+  toneClass,
+}: Readonly<{ imageSrc: string; toneClass: string }>) {
   return (
-    <div className="space-y-6 text-white">
-      {/* Brand + Guest badge */}
-      <div className="flex flex-wrap items-center gap-3">
-        <span className="rounded-pill border border-white/25 bg-white/12 px-3.5 py-1.5 text-[11px] font-bold uppercase tracking-[0.2em] text-white/90 backdrop-blur-sm">
-          Guest Browsing
-        </span>
-        <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-white/65">
-          No login required
-        </span>
-      </div>
+    <div className="absolute inset-0 -z-10">
+      <div
+        className="absolute inset-0 bg-cover bg-no-repeat"
+        style={{ backgroundImage: `url('${imageSrc}')`, backgroundPosition: "84% center" }}
+      />
+      <div className={`absolute inset-0 ${toneClass}`} />
+      <div className="absolute inset-0 bg-[linear-gradient(108deg,rgba(7,30,28,0.94)_6%,rgba(7,30,28,0.68)_34%,rgba(7,30,28,0.2)_66%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(8,24,23,0.08),rgba(8,24,23,0.12)_28%,rgba(8,24,23,0.72)_100%)]" />
+    </div>
+  );
+}
 
-      {/* Headline block */}
-      <div className="space-y-5">
-        <p className="type-label text-white/55">Rogveda Medical Travel</p>
-        <h1 className="type-display-xl text-white drop-shadow-[0_2px_12px_rgba(0,0,0,0.3)]">
-          Compare trusted knee replacement options in Delhi.
+function HeroTopBar() {
+  return (
+    <div className="flex items-center justify-between gap-4">
+      <p className="type-label text-white/74">Rogveda Medical Travel</p>
+      <span className="rounded-pill border border-white/18 bg-white/10 px-3 py-1 text-[11px] font-bold uppercase tracking-[0.18em] text-white/88 backdrop-blur-sm">
+        Guest Search
+      </span>
+    </div>
+  );
+}
+
+function HeroContent() {
+  return (
+    <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
+      <div className="max-w-[520px] animate-rv-fade-up lg:col-span-6 xl:max-w-[560px]">
+        <p className="type-label text-white/58">Delhi knee replacement shortlist</p>
+        <h1 className="mt-4 type-display-xl max-w-[8ch] text-white lg:max-w-[7.6ch]">
+          Find trusted knee replacement care in Delhi.
         </h1>
-        <p className="max-w-[540px] type-body-l text-white/85">
-          Browse hospitals without logging in. Change doctor and room choices and see transparent
-          pricing before booking.
+        <p className="mt-5 max-w-[29ch] type-body-l text-white/82">
+          Browse partner hospitals without logging in, switch surgeon and room choices instantly,
+          and keep a transparent quote in view before booking.
         </p>
+
+        <div className="mt-7 flex flex-wrap gap-3">
+          <Link
+            href="#hospital-compare"
+            className="btn-primary inline-flex w-fit items-center gap-2.5 px-8 text-[15px]"
+          >
+            Compare Hospitals
+            <ArrowDown />
+          </Link>
+          <Link
+            href="/vendor/login"
+            className="inline-flex h-12 w-fit items-center gap-2 rounded-pill border border-white/18 bg-white/8 px-7 text-white transition-colors duration-150 ease-out hover:bg-white/14"
+          >
+            View Vendor Route
+          </Link>
+        </div>
       </div>
-
-      {/* CTA */}
-      <Link
-        href="#hospital-compare"
-        className="btn-primary inline-flex w-fit items-center gap-2.5 px-8 text-[15px]"
-      >
-        Compare Hospitals
-        <svg
-          width="16"
-          height="16"
-          viewBox="0 0 16 16"
-          fill="none"
-          aria-hidden="true"
-          className="opacity-80"
-        >
-          <path
-            d="M8 3v10M4 9l4 4 4-4"
-            stroke="currentColor"
-            strokeWidth="1.5"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-          />
-        </svg>
-      </Link>
     </div>
   );
 }
 
-function HeroTrustStrip({ mobile = false }: { mobile?: boolean }) {
+function HeroTrustBand() {
   return (
-    <div className={`grid gap-4 ${mobile ? "grid-cols-1 gap-3" : "sm:grid-cols-3 gap-5"}`}>
-      <TrustCallout
-        title="Transparent estimate"
-        body="Room and surgeon changes update instantly, with no hidden coordination fee."
-        mobile={mobile}
-      />
-      <TrustCallout
-        title="Travel coordination"
-        body="Visa invite, pickup, and stay planning are surfaced up front."
-        mobile={mobile}
-      />
-      <TrustCallout
-        title="NCR partner coverage"
-        body="Gurgaon partner options can appear for Delhi searches when travel time stays practical."
-        mobile={mobile}
-      />
+    <div className="animate-rv-fade-up rounded-[28px] border border-white/12 bg-[rgba(255,250,242,0.92)] p-1.5 text-ink shadow-elevated backdrop-blur-md">
+      <div className="grid gap-px overflow-hidden rounded-[24px] bg-border/60 md:grid-cols-3">
+        {heroTrustPoints.map((point) => (
+          <div key={point.title} className="bg-[rgba(255,250,242,0.96)] px-4 py-4 sm:px-5 sm:py-5">
+            <p className="type-label text-accent/72">Trust</p>
+            <p className="mt-2 text-[15px] font-semibold leading-6 text-ink">{point.title}</p>
+            <p className="mt-2 text-[13px] leading-[21px] text-ink/66">{point.body}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
 
-type TrustCalloutProps = Readonly<{
-  title: string;
-  body: string;
-  mobile?: boolean;
-}>;
-
-function TrustCallout({ title, body, mobile }: TrustCalloutProps) {
+function ArrowDown() {
   return (
-    <div
-      className={`border-l-2 pl-4 ${mobile ? "border-accent/50 py-1.5" : "border-white/25 py-0.5"}`}
-    >
-      <p className={`text-[14px] font-bold leading-5 ${mobile ? "text-ink" : "text-white/95"}`}>
-        {title}
-      </p>
-      <p className={`mt-1 text-[13px] leading-[22px] ${mobile ? "text-ink/65" : "text-white/70"}`}>
-        {body}
-      </p>
-    </div>
+    <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true">
+      <path
+        d="M8 3v10M4 9l4 4 4-4"
+        stroke="currentColor"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+    </svg>
   );
 }

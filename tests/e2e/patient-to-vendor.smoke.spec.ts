@@ -6,12 +6,12 @@ test("patient booking keeps currency context, shows a negative wallet, and trans
   await page.goto("/");
 
   await expect(
-    page.getByRole("heading", { name: "Compare trusted knee replacement options in Delhi." }),
+    page.getByRole("heading", { name: "Find trusted knee replacement care in Delhi." }),
   ).toBeVisible();
   await page.getByRole("button", { name: "INR" }).click();
 
   const firstCard = page.locator("article").first();
-  const estimateHeading = firstCard.locator("h3");
+  const estimateHeading = firstCard.getByTestId("hospital-price-panel").locator("h3");
   await expect.poll(async () => (await estimateHeading.textContent())?.includes("$")).toBe(false);
 
   const shortlistedPrice = (await estimateHeading.textContent())?.trim();

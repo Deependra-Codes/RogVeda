@@ -6,6 +6,7 @@ import {
   type LoadedBookingConfirmation,
   mapBookingConfirmation,
 } from "./booking-model";
+import { readBookingConfirmationAccess } from "./confirmation-access";
 
 export type BookingConfirmationState =
   | {
@@ -14,6 +15,9 @@ export type BookingConfirmationState =
     }
   | {
       kind: "not_found";
+    }
+  | {
+      kind: "unauthorized";
     }
   | {
       kind: "unconfigured";
@@ -27,6 +31,15 @@ export type BookingConfirmationState =
 export async function loadBookingConfirmation(
   bookingId: string,
 ): Promise<BookingConfirmationState> {
+  const confirmationAccess = await readBookingConfirmationAccess(bookingId);
+  if (confirmationAccess.kind === "unauthorized") {
+    return { kind: "unauthorized" };
+  }
+
+  if (confirmationAccess.kind === "unconfigured") {
+    return { kind: "unconfigured", missingKeys: [...confirmationAccess.missingKeys] };
+  }
+
   const missingKeys = getSupabaseWriteEnvIssues();
   if (missingKeys.length) {
     return { kind: "unconfigured", missingKeys };

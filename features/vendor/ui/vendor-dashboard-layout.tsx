@@ -15,7 +15,7 @@ export function VendorFocusPanel({ booking }: VendorFocusPanelProps) {
   if (!booking) {
     return (
       <section className="panel-operational p-6">
-        <p className="type-label text-ink/45">Queue Focus</p>
+        <p className="type-label text-accent/72">Queue Focus</p>
         <p className="mt-3 type-body-s text-ink/62">
           Once a patient confirms a booking, the first task and booking summary will appear here.
         </p>
@@ -24,8 +24,8 @@ export function VendorFocusPanel({ booking }: VendorFocusPanelProps) {
   }
 
   return (
-    <section className="panel-operational p-6 sm:p-7">
-      <p className="type-label text-ink/45">Next Booking In Focus</p>
+    <section className="panel-operational bg-[rgba(228,236,232,0.52)] p-6 sm:p-7">
+      <p className="type-label text-accent/72">Next Booking In Focus</p>
       <h2 className="mt-3 type-heading-l text-ink">{booking.patientName}</h2>
       <p className="mt-2 type-body-s text-ink/62">
         {booking.procedureName} at {booking.hospitalName}, {booking.hospitalCity}
@@ -58,7 +58,7 @@ export function VendorQueueIntro({ bookingCount, pendingTaskCount }: VendorQueue
     <section className="panel-operational p-5 sm:p-6">
       <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
         <div>
-          <p className="type-label text-ink/45">Booking Queue</p>
+          <p className="type-label text-brass/78">Booking Queue</p>
           <h2 className="mt-3 type-heading-l text-ink">Confirmed bookings ready for follow-up.</h2>
           <p className="mt-2 type-body-s text-ink/62">
             Newest bookings stay visible with the action zone separated clearly on the right.

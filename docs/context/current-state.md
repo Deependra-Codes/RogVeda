@@ -2,7 +2,7 @@
 
 Status: active
 Last updated: 2026-04-23
-Current phase: the route-level UI bible pass is now implemented and verified on both the local and hosted runtime; human mobile QA and GitHub Actions secret mirroring are the main remaining submission blockers
+Current phase: the premium UI + auth hardening + redeploy pass is now verified locally and on the live Vercel deployment; the remaining blockers are human mobile QA plus later route-level patient auth work rather than missing product flow or repo health
 
 ## Purpose
 
@@ -33,11 +33,11 @@ If you are starting a new session:
 - Repo type:
   Rogveda trial repo with hard-enforced engineering OS
 - Product app state:
-  patient search, booking confirmation write path, and vendor login/dashboard task flow are implemented on top of the app scaffold with read/write Supabase runtime boundaries, cached patient search reads, verified database-level RLS boundaries, deterministic coverage for empty states and currency or wallet display rules, production-ready PWA basics, a canonical UI bible, and a completed premium route-level UI implementation across `/`, `/booking`, `/booking/confirmation/[bookingId]`, `/vendor/login`, and `/vendor/dashboard`
+  patient search, booking confirmation write path, and vendor login/dashboard task flow are implemented on top of the app scaffold with read/write Supabase runtime boundaries, cached patient search reads, verified database-level RLS boundaries, deterministic coverage for empty states and currency or wallet display rules, production-ready PWA basics, a canonical UI bible, a completed premium route-level UI implementation across `/`, `/booking`, `/booking/confirmation/[bookingId]`, `/vendor/login`, and `/vendor/dashboard`, plus targeted auth hardening through signed vendor sessions, hashed vendor credentials, and same-browser booking confirmation access
 - Git state:
-  git repo initialized locally
+  repo baseline is pushed to `origin/main`, and the current premium UI + auth hardening pass is verified and ready to publish from this workspace
 - Quality state:
-  `pnpm repo:policy`, `pnpm build`, `pnpm repo:check`, and `pnpm exec playwright test tests/e2e/patient-to-vendor.smoke.spec.ts` pass against local Supabase after the UI refactor; hosted Supabase now has migration and seed parity, the public Vercel deployment responds successfully, and a browser-level production probe completes the patient-to-vendor flow against the live URL; Lighthouse still records performance warnings on `/`
+  `pnpm repo:quality`, `pnpm build`, the focused Playwright smoke file, and `pnpm repo:check` are green again on the current pass, and the live production probe also completes search -> booking -> confirmation -> vendor completion successfully
 
 ## What Exists Today
 
@@ -155,11 +155,16 @@ If you are starting a new session:
 - `supabase/migrations/20260422234500_supabase_rls_access_hardening.sql`
 - `supabase/migrations/20260422235500_restrict_public_rpc_execution.sql`
 - `supabase/migrations/20260422235800_reload_postgrest_schema_after_acl_changes.sql`
+- `supabase/migrations/20260423103607_vendor_password_hash_hardening.sql`
 - `supabase/seed.sql`
 - `supabase/types.ts`
 - `supabase/clients/server.ts`
 - `lib/env.ts`
+- `lib/signed-token.ts`
 - `lib/currency.ts`
+- `lib/experience-visuals.ts`
+- `features/booking/server/confirmation-access.ts`
+- `features/vendor/server/password-hash.ts`
 - `tests/lib/currency.test.ts`
 - `tests/ui/state-panels.test.ts`
 
@@ -201,26 +206,29 @@ The repo is ready for product work because:
 - the focused browser smoke path now proves INR continuity into booking and confirmation plus the negative wallet outcome before vendor task completion
 - deterministic tests now cover search empty state, vendor empty state, and shared currency formatting rules without mutating seeded data
 - manifest, install icons, and a narrow production-only service worker are now in place for installability basics
-- GitHub Actions, `.env.example`, and `supabase/README.md` now use the same hosted-ready Supabase env contract
+- GitHub Actions, `.env.example`, and `supabase/README.md` now use the same hosted-ready Supabase env contract, and the GitHub repo secrets now include `ROGVEDA_SESSION_SECRET` alongside the hosted Supabase values
+- vendor sessions now use signed expiring cookies instead of unsigned base64 payloads, and vendor passwords are verified against stored scrypt hashes rather than plaintext
+- booking confirmation pages now require a same-browser signed confirmation cookie instead of exposing booking details by raw `bookingId`
+- the homepage hero copy and media system now use repo-local configurable visuals, and the mobile text-wrap or readability regression is fixed
+- the service worker now skips localhost registration, clears old local Rogveda caches, and no longer caches Next.js scripts or styles
+- the build path now starts from a clean `.next` directory so stale cached search IDs do not survive Supabase resets and poison later booking links
 - the repo is now linked to the Vercel project, production Supabase envs are set on Vercel, hosted Supabase is migrated and seeded, and the public production deployment is live at `https://project-feiuh.vercel.app`
 - the Vercel project framework is now explicitly set to `nextjs`; this fixed the broken `framework: null` deploy state that had been emitting a 404-only output bundle
+- the current production deployment was reissued after the auth hardening and homepage refinement pass, and the live browser probe now confirms INR continuity, booking confirmation, and vendor task completion against hosted Supabase
 
 ## Current Gaps
 
 - manual mobile QA still needs a human pass after the booking and vendor page refactors
 - Lighthouse performance remains warning-level on this machine for `/`, even though accessibility and best-practices clear their enforced thresholds
-- the booking confirmation route is still public by booking ID and may need signed-route or patient-session hardening later
 - the patient-auth chapter in `docs/product/ui-bible.md` is design-only; route-level patient auth remains a later security slice
-- vendor auth/session is intentionally trial-minimal and not production hardening
-- GitHub Actions secret access is still missing in this workspace, so the hosted runtime values were not mirrored into GitHub from here
 
 ## Recommended Next Step
 
 Finish the remaining manual and submission-adjacent blockers before calling the build fully submission-ready:
 
 1. perform a human mobile QA pass on `/`, `/booking`, `/booking/confirmation/[bookingId]`, `/vendor/login`, and `/vendor/dashboard`
-2. mirror the hosted runtime values into GitHub Actions once secret access is available
-3. keep route-level patient auth hardening and the `/` Lighthouse warning tracked as explicit follow-up work rather than reopening the hosted runtime slice
+2. keep route-level patient auth hardening and the `/` Lighthouse warning tracked as explicit follow-up work rather than reopening the hosted runtime slice
+3. if a contributor sees dead currency switching or invalid booking links after another local Supabase reset, first confirm that no stale `next start --port 3200` process is running and then rebuild from the cleaned `.next` path before debugging app logic
 
 ## First Slice Goal
 

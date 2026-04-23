@@ -5,7 +5,7 @@
   "packageManager": "pnpm@10.28.2",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "node -e \"require('node:fs').rmSync('.next', { recursive: true, force: true })\" && next build",
     "start": "next start",
     "repo:doctor": "node tools/repo/doctor.mjs",
     "repo:bootstrap": "node tools/repo/bootstrap.mjs",

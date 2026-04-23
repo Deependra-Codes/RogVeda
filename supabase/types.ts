@@ -32,20 +32,20 @@ export interface Database {
         {
           id: string;
           username: string;
-          password: string;
+          password_hash: string;
           display_name: string;
           created_at: string;
         },
         {
           id?: string;
           username: string;
-          password: string;
+          password_hash: string;
           display_name: string;
           created_at?: string;
         },
         Partial<{
           username: string;
-          password: string;
+          password_hash: string;
           display_name: string;
         }>
       >;
