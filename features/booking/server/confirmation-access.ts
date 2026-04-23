@@ -1,6 +1,7 @@
 import { cookies } from "next/headers";
 import { z } from "zod";
 
+import { shouldUseSecureCookie } from "../../../lib/cookie-security";
 import { getRogvedaSessionSecret } from "../../../lib/env";
 import { createSignedToken, parseSignedToken } from "../../../lib/signed-token";
 
@@ -71,13 +72,14 @@ export async function grantBookingConfirmationAccess(bookingId: string) {
   }
 
   const cookieStore = await cookies();
+  const secure = await shouldUseSecureCookie();
   cookieStore.set(
     bookingConfirmationCookieName,
     createBookingConfirmationAccessToken(bookingId, { secret }),
     {
       httpOnly: true,
       sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
+      secure,
       path: "/booking/confirmation",
       maxAge: bookingConfirmationMaxAgeSeconds,
     },

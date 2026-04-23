@@ -2,7 +2,7 @@
 
 Status: active
 Last updated: 2026-04-23
-Current phase: the premium UI + auth hardening + redeploy pass is now verified locally and on the live Vercel deployment; the remaining blockers are human mobile QA plus later route-level patient auth work rather than missing product flow or repo health
+Current phase: the premium UI + auth hardening + vendor form redirect hardening pass is verified locally and on the live Vercel deployment; the remaining blockers are human mobile QA plus later route-level patient auth work rather than missing product flow or repo health
 
 ## Purpose
 
@@ -33,11 +33,11 @@ If you are starting a new session:
 - Repo type:
   Rogveda trial repo with hard-enforced engineering OS
 - Product app state:
-  patient search, booking confirmation write path, and vendor login/dashboard task flow are implemented on top of the app scaffold with read/write Supabase runtime boundaries, cached patient search reads, verified database-level RLS boundaries, deterministic coverage for empty states and currency or wallet display rules, production-ready PWA basics, a canonical UI bible, a completed premium route-level UI implementation across `/`, `/booking`, `/booking/confirmation/[bookingId]`, `/vendor/login`, and `/vendor/dashboard`, plus targeted auth hardening through signed vendor sessions, hashed vendor credentials, and same-browser booking confirmation access
+  patient search, booking confirmation write path, and vendor login/dashboard task flow are implemented on top of the app scaffold with read/write Supabase runtime boundaries, cached patient search reads, verified database-level RLS boundaries, deterministic coverage for empty states and currency or wallet display rules, production-ready PWA basics, a canonical UI bible, a completed premium route-level UI implementation across `/`, `/booking`, `/booking/confirmation/[bookingId]`, `/vendor/login`, and `/vendor/dashboard`, plus targeted auth hardening through signed vendor sessions, hashed vendor credentials, same-browser booking confirmation access, and origin-preserving vendor form POST redirects
 - Git state:
-  repo baseline is pushed to `origin/main`, and the current premium UI + auth hardening pass is verified and ready to publish from this workspace
+  the latest production deploy was issued from this workspace; these latest local changes are not yet committed or pushed to `origin/main`
 - Quality state:
-  `pnpm repo:quality`, `pnpm build`, the focused Playwright smoke file, and `pnpm repo:check` are green again on the current pass, and the live production probe also completes search -> booking -> confirmation -> vendor completion successfully
+  `pnpm repo:check` is green after the vendor form POST redirect hardening, the archived Vercel production deploy succeeded, and the live browser probe completed search -> booking -> confirmation -> vendor task completion on `https://project-feiuh.vercel.app`
 
 ## What Exists Today
 
@@ -101,6 +101,10 @@ If you are starting a new session:
 - `app/booking/confirmation/[bookingId]/page.tsx`
 - `app/vendor/login/page.tsx`
 - `app/vendor/dashboard/page.tsx`
+- `app/vendor/actions/complete-task/route.ts`
+- `app/vendor/actions/login/route.ts`
+- `app/vendor/actions/logout/route.ts`
+- `app/vendor/actions/redirect-url.ts`
 - `features/patient-search/public/patient-search-page.tsx`
 - `features/patient-search/server/list-search-results.ts`
 - `features/patient-search/client/patient-search-experience.tsx`
@@ -122,6 +126,7 @@ If you are starting a new session:
 - `features/booking/server/confirm-booking-action.ts`
 - `features/vendor/public/vendor-login-page.tsx`
 - `features/vendor/public/vendor-dashboard-page.tsx`
+- `features/vendor/public/vendor-form-routes.ts`
 - `features/vendor/ui/vendor-dashboard-header.tsx`
 - `features/vendor/ui/vendor-dashboard-layout.tsx`
 - `features/vendor/ui/vendor-login-sections.tsx`
@@ -130,8 +135,7 @@ If you are starting a new session:
 - `features/vendor/ui/vendor-booking-card.tsx`
 - `features/vendor/ui/vendor-booking-card-sections.tsx`
 - `features/vendor/ui/vendor-state-panels.tsx`
-- `features/vendor/server/vendor-login-action.ts`
-- `features/vendor/server/complete-task-action.ts`
+- `features/vendor/server/vendor-form-flow.ts`
 - `components/ui/service-worker-register.tsx`
 - `public/sw.js`
 - `public/favicon.svg`
@@ -160,12 +164,14 @@ If you are starting a new session:
 - `supabase/types.ts`
 - `supabase/clients/server.ts`
 - `lib/env.ts`
+- `lib/cookie-security.ts`
 - `lib/signed-token.ts`
 - `lib/currency.ts`
 - `lib/experience-visuals.ts`
 - `features/booking/server/confirmation-access.ts`
 - `features/vendor/server/password-hash.ts`
 - `tests/lib/currency.test.ts`
+- `tests/lib/cookie-security.test.ts`
 - `tests/ui/state-panels.test.ts`
 
 ## Engineering Rules That Matter Most
@@ -208,6 +214,7 @@ The repo is ready for product work because:
 - manifest, install icons, and a narrow production-only service worker are now in place for installability basics
 - GitHub Actions, `.env.example`, and `supabase/README.md` now use the same hosted-ready Supabase env contract, and the GitHub repo secrets now include `ROGVEDA_SESSION_SECRET` alongside the hosted Supabase values
 - vendor sessions now use signed expiring cookies instead of unsigned base64 payloads, and vendor passwords are verified against stored scrypt hashes rather than plaintext
+- vendor login, logout, and task completion now submit through origin-preserving route-handler POSTs so redirect cookies survive production-start browser flows
 - booking confirmation pages now require a same-browser signed confirmation cookie instead of exposing booking details by raw `bookingId`
 - the homepage hero copy and media system now use repo-local configurable visuals, and the mobile text-wrap or readability regression is fixed
 - the service worker now skips localhost registration, clears old local Rogveda caches, and no longer caches Next.js scripts or styles

@@ -1,10 +1,10 @@
 import { formatMoneyFromUsdCents } from "@/lib/currency";
 
 import type { VendorDashboardBooking } from "../server/dashboard-model";
+import { vendorFormActionRoutes } from "../types/contracts";
 
 type VendorBookingTaskPanelProps = Readonly<{
   booking: VendorDashboardBooking;
-  completeTaskAction: (formData: FormData) => Promise<void>;
 }>;
 
 export function VendorBookingHeader({
@@ -57,10 +57,7 @@ export function VendorBookingDetails({ booking }: Readonly<{ booking: VendorDash
   );
 }
 
-export function VendorBookingTaskPanel({
-  booking,
-  completeTaskAction,
-}: VendorBookingTaskPanelProps) {
+export function VendorBookingTaskPanel({ booking }: VendorBookingTaskPanelProps) {
   const isPending = booking.taskStatus === "Pending";
 
   return (
@@ -86,7 +83,7 @@ export function VendorBookingTaskPanel({
       </p>
 
       {isPending && booking.taskId ? (
-        <form action={completeTaskAction} className="mt-5 shrink-0">
+        <form action={vendorFormActionRoutes.completeTask} method="post" className="mt-5 shrink-0">
           <input type="hidden" name="taskId" value={booking.taskId} />
           <button type="submit" className="btn-primary h-11 w-full text-[13px]">
             Mark Task Complete

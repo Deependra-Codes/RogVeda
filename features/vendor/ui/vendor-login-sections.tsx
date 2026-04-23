@@ -2,7 +2,7 @@ import Link from "next/link";
 
 import { experienceVisuals } from "@/lib/experience-visuals";
 
-import { vendorDemoCredentials } from "../types/contracts";
+import { vendorDemoCredentials, vendorFormActionRoutes } from "../types/contracts";
 
 export function VendorLoginVisualPanel() {
   const vendorVisual = experienceVisuals.vendorLogin;
@@ -32,10 +32,8 @@ export function VendorLoginVisualPanel() {
 
 export function VendorLoginContent({
   errorMessage,
-  loginAction,
 }: Readonly<{
   errorMessage?: string;
-  loginAction: (formData: FormData) => Promise<void>;
 }>) {
   return (
     <div className="flex flex-col justify-center bg-paper p-6 sm:p-10 lg:col-span-7 lg:p-14">
@@ -43,7 +41,7 @@ export function VendorLoginContent({
       {errorMessage ? (
         <VendorLoginMessagePanel title="Vendor login failed" body={errorMessage} tone="error" />
       ) : null}
-      <VendorLoginForm loginAction={loginAction} />
+      <VendorLoginForm />
       <VendorLoginSupportPanels />
       <div className="mt-8">
         <Link href="/" className="btn-tertiary inline-flex items-center gap-1.5 text-sm">
@@ -78,11 +76,13 @@ function VendorLoginIntro() {
   );
 }
 
-function VendorLoginForm({
-  loginAction,
-}: Readonly<{ loginAction: (formData: FormData) => Promise<void> }>) {
+function VendorLoginForm() {
   return (
-    <form action={loginAction} className="mt-8 space-y-5 animate-rv-fade-up animation-delay-100">
+    <form
+      action={vendorFormActionRoutes.login}
+      method="post"
+      className="mt-8 space-y-5 animate-rv-fade-up animation-delay-100"
+    >
       <Field label="Username" name="username" autoComplete="username" defaultValue="apollo" />
       <Field
         label="Password"

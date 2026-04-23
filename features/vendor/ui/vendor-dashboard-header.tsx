@@ -1,11 +1,12 @@
 import Link from "next/link";
 
+import { vendorFormActionRoutes } from "../types/contracts";
+
 type VendorDashboardHeaderProps = Readonly<{
   vendorName: string;
-  logoutAction: () => Promise<void>;
 }>;
 
-export function VendorDashboardHeader({ vendorName, logoutAction }: VendorDashboardHeaderProps) {
+export function VendorDashboardHeader({ vendorName }: VendorDashboardHeaderProps) {
   return (
     <section className="flex flex-wrap items-end justify-between gap-5 border-b border-border pb-6 pt-2">
       <div className="max-w-[560px]">
@@ -23,7 +24,7 @@ export function VendorDashboardHeader({ vendorName, logoutAction }: VendorDashbo
         <Link href="/" className="btn-tertiary text-sm">
           Patient Search
         </Link>
-        <form action={logoutAction}>
+        <form action={vendorFormActionRoutes.logout} method="post">
           <button type="submit" className="btn-secondary text-sm">
             Sign Out
           </button>

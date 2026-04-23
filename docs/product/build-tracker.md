@@ -142,6 +142,9 @@ Status key:
   stale `next start --port 3200` processes could make local browser checks hit an older build than the one just compiled, and stale `.next` artifacts after local Supabase resets could preserve old hospital or doctor IDs inside the static homepage.
 - Fixed those verification traps by cleaning `.next` before every build, keeping Playwright on a dedicated port, unregistering Rogveda service workers on localhost, and rebuilding the local release path from a clean output directory.
 - Re-pushed the vendor-password migration and current seed hash to hosted Supabase, redeployed Vercel production, and re-ran a live browser probe that completed search -> booking -> confirmation -> vendor task completion on `https://project-feiuh.vercel.app`.
+- Fixed the GitHub runner by installing Playwright Chromium inside `.github/workflows/ci.yml`; the latest `main` push now clears CI successfully.
+- Hardened vendor form POST redirects so login/session cookies and task-completion redirects preserve the submitting origin; the focused patient-to-vendor smoke is green again locally.
+- Re-ran `pnpm repo:check`, deployed production with archived Vercel upload, and confirmed the live patient-to-vendor probe on booking `94be4281-61c9-4530-9601-b16bc060f15b`.
 
 ### 2026-04-22
 

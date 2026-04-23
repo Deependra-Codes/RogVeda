@@ -6,8 +6,13 @@ Schema, migrations, seed data, generated types, and server clients live here.
 
 1. install Docker Desktop and keep it running
 2. run `pnpm dlx supabase start`
-3. copy the local API URL and publishable key into `.env.local`
-4. use `pnpm dlx supabase db reset` to replay migrations and seed data
+3. fetch the local URL + keys via `pnpm dlx supabase status`
+4. create `.env.local` from `.env.example` and set:
+   - `NEXT_PUBLIC_SUPABASE_URL`
+   - `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (or `NEXT_PUBLIC_SUPABASE_ANON_KEY`)
+   - `SUPABASE_SERVICE_ROLE_KEY`
+   - `ROGVEDA_SESSION_SECRET`
+5. use `pnpm dlx supabase db reset` to replay migrations and seed data
 
 ## Hosted Workflow
 
@@ -19,7 +24,7 @@ Hosted Supabase is the canonical runtime for deployment and submission once cred
    `pnpm dlx supabase db pull supabase/migrations/<timestamp>_hosted_audit.sql`
 3. push the repo schema and demo seed to the linked hosted project:
    `pnpm dlx supabase db push --linked --include-all --include-seed --yes`
-4. mirror the same four runtime keys into:
+4. mirror the same env contract into:
    - `.env.local` for local hosted-runtime verification
    - GitHub Actions secrets for `repo:check`
    - Vercel project environment variables for the live app
@@ -27,8 +32,8 @@ Hosted Supabase is the canonical runtime for deployment and submission once cred
 ## Shared Env Contract
 
 - `NEXT_PUBLIC_SUPABASE_URL`
-- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`
-- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY` (preferred when available)
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY` (fallback for older projects / local CLI output)
 - `SUPABASE_SERVICE_ROLE_KEY`
 - `ROGVEDA_SESSION_SECRET`
 

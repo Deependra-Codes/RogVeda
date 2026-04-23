@@ -2,10 +2,8 @@ import { redirect } from "next/navigation";
 
 import type { RouteSearchParams } from "@/lib/route-search";
 
-import { completeTaskAction } from "../server/complete-task-action";
 import { loadVendorDashboard } from "../server/load-vendor-dashboard";
 import { readVendorSession } from "../server/session";
-import { vendorLogoutAction } from "../server/vendor-logout-action";
 import {
   buildVendorLoginRoute,
   getVendorDashboardErrorMessage,
@@ -43,7 +41,7 @@ export async function VendorDashboardPage({ searchParams }: VendorDashboardPageP
   return (
     <main className="min-h-screen bg-[radial-gradient(circle_at_top_left,rgba(15,109,104,0.06),transparent_24%),radial-gradient(circle_at_top_right,rgba(162,103,34,0.06),transparent_20%),linear-gradient(180deg,rgba(255,250,242,0.7),rgba(244,238,227,0.96))] px-4 py-8 font-sans sm:px-6 lg:px-8">
       <div className="mx-auto flex max-w-[1280px] flex-col gap-6">
-        <VendorDashboardHeader vendorName={session.displayName} logoutAction={vendorLogoutAction} />
+        <VendorDashboardHeader vendorName={session.displayName} />
 
         {dashboardState.kind === "unconfigured" ? (
           <VendorInfoPanel
@@ -93,12 +91,7 @@ export async function VendorDashboardPage({ searchParams }: VendorDashboardPageP
                 pendingTaskCount={dashboardState.pendingTaskCount}
               />
               {dashboardState.bookings.map((booking, index) => (
-                <VendorBookingCard
-                  key={booking.bookingId}
-                  booking={booking}
-                  completeTaskAction={completeTaskAction}
-                  index={index}
-                />
+                <VendorBookingCard key={booking.bookingId} booking={booking} index={index} />
               ))}
             </section>
           </div>

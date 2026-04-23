@@ -7,15 +7,10 @@ import {
 
 type VendorBookingCardProps = Readonly<{
   booking: VendorDashboardBooking;
-  completeTaskAction: (formData: FormData) => Promise<void>;
   index?: number;
 }>;
 
-export function VendorBookingCard({
-  booking,
-  completeTaskAction,
-  index = 0,
-}: VendorBookingCardProps) {
+export function VendorBookingCard({ booking, index = 0 }: VendorBookingCardProps) {
   const isPending = booking.taskStatus === "Pending";
 
   return (
@@ -30,7 +25,7 @@ export function VendorBookingCard({
           <VendorBookingHeader booking={booking} status={booking.bookingStatus} />
           <VendorBookingDetails booking={booking} />
         </div>
-        <VendorBookingTaskPanel booking={booking} completeTaskAction={completeTaskAction} />
+        <VendorBookingTaskPanel booking={booking} />
       </div>
     </article>
   );

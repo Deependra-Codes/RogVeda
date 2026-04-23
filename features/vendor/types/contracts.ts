@@ -46,6 +46,12 @@ export const vendorDemoCredentials = {
   password: "apollo123",
 } as const;
 
+export const vendorFormActionRoutes = {
+  login: "/vendor/actions/login",
+  completeTask: "/vendor/actions/complete-task",
+  logout: "/vendor/actions/logout",
+} as const;
+
 export function parseVendorLoginPayload(formData: FormData) {
   return vendorLoginPayloadSchema.safeParse(Object.fromEntries(formData));
 }

@@ -16,6 +16,7 @@ Rebuild the route UI, harden the targeted auth surface, update the env contract,
 ## Checks Run
 
 - `gh secret list --repo Deependra-Codes/RogVeda`
+- `gh run view 24822828821 --repo Deependra-Codes/RogVeda --json status,conclusion`
 - `pnpm repo:quality`
 - `pnpm build`
 - `pnpm exec playwright test tests/e2e/patient-to-vendor.smoke.spec.ts`
@@ -39,6 +40,7 @@ Rebuild the route UI, harden the targeted auth surface, update the env contract,
 ## Verification Outcome
 
 - local repo gates are green again
+- the latest GitHub Actions CI run on `main` is green after adding Playwright Chromium installation to the workflow
 - focused Playwright smoke path passes
 - responsive mobile smoke checks pass
 - hosted Supabase push succeeded

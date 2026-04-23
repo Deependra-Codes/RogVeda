@@ -21,9 +21,9 @@ export function SearchHero() {
   const heroVisual = experienceVisuals.homeHero;
 
   return (
-    <section className="relative isolate min-h-[680px] overflow-hidden bg-anchor text-white sm:min-h-[88svh]">
+    <section className="relative isolate min-h-[680px] bg-anchor text-white sm:min-h-[88svh]">
       <HeroBackground imageSrc={heroVisual.imageSrc} toneClass={heroVisual.toneClass} />
-      <div className="mx-auto flex min-h-[inherit] w-full max-w-[1280px] flex-col justify-between px-4 pb-5 pt-5 sm:px-6 sm:pb-8 sm:pt-8 lg:px-8 lg:pb-10">
+      <div className="mx-auto flex min-h-[inherit] w-full max-w-[1280px] flex-col justify-between px-4 pb-12 pt-5 sm:px-6 sm:pb-16 sm:pt-8 lg:px-8 lg:pb-20">
         <HeroTopBar />
         <HeroContent />
         <HeroTrustBand />
@@ -65,10 +65,10 @@ function HeroContent() {
     <div className="grid gap-8 lg:grid-cols-12 lg:items-end">
       <div className="max-w-[520px] animate-rv-fade-up lg:col-span-6 xl:max-w-[560px]">
         <p className="type-label text-white/58">Delhi knee replacement shortlist</p>
-        <h1 className="mt-4 type-display-xl max-w-[8ch] text-white lg:max-w-[7.6ch]">
+        <h1 className="mt-4 type-display-xl max-w-[14ch] text-white">
           Find trusted knee replacement care in Delhi.
         </h1>
-        <p className="mt-5 max-w-[29ch] type-body-l text-white/82">
+        <p className="mt-5 max-w-[38ch] type-body-l text-white/82">
           Browse partner hospitals without logging in, switch surgeon and room choices instantly,
           and keep a transparent quote in view before booking.
         </p>
@@ -95,7 +95,7 @@ function HeroContent() {
 
 function HeroTrustBand() {
   return (
-    <div className="animate-rv-fade-up rounded-[28px] border border-white/12 bg-[rgba(255,250,242,0.92)] p-1.5 text-ink shadow-elevated backdrop-blur-md">
+    <div className="animate-rv-fade-up translate-y-8 rounded-[28px] border border-white/12 bg-[rgba(255,250,242,0.92)] p-1.5 text-ink shadow-elevated backdrop-blur-md">
       <div className="grid gap-px overflow-hidden rounded-[24px] bg-border/60 md:grid-cols-3">
         {heroTrustPoints.map((point) => (
           <div key={point.title} className="bg-[rgba(255,250,242,0.96)] px-4 py-4 sm:px-5 sm:py-5">

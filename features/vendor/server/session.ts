@@ -1,5 +1,6 @@
 import { cookies } from "next/headers";
 
+import { shouldUseSecureCookie } from "@/lib/cookie-security";
 import { getRogvedaSessionSecret } from "@/lib/env";
 
 import {
@@ -8,7 +9,7 @@ import {
   parseVendorSessionToken,
 } from "./session-token";
 
-const vendorSessionCookieName = "rogveda_vendor_session";
+export const vendorSessionCookieName = "rogveda_vendor_session";
 const vendorSessionMaxAgeSeconds = 60 * 60 * 12;
 
 export async function readVendorSession() {
@@ -27,39 +28,58 @@ export async function readVendorSession() {
 }
 
 export async function setVendorSession(payload: VendorSessionPayload) {
-  const secret = getRogvedaSessionSecret();
-  if (!secret) {
+  const secure = await shouldUseSecureCookie();
+  const cookie = createVendorSessionCookie(payload, secure);
+  if (!cookie) {
     return false;
   }
 
   const cookieStore = await cookies();
-
-  cookieStore.set(
-    vendorSessionCookieName,
-    createVendorSessionToken(payload, {
-      secret,
-      expiresInSeconds: vendorSessionMaxAgeSeconds,
-    }),
-    {
-      httpOnly: true,
-      sameSite: "lax",
-      secure: process.env.NODE_ENV === "production",
-      path: "/",
-      maxAge: vendorSessionMaxAgeSeconds,
-    },
-  );
+  cookieStore.set(cookie.name, cookie.value, cookie.options);
 
   return true;
 }
 
 export async function clearVendorSession() {
   const cookieStore = await cookies();
+  const secure = await shouldUseSecureCookie();
+  const cookie = createClearedVendorSessionCookie(secure);
 
-  cookieStore.set(vendorSessionCookieName, "", {
-    httpOnly: true,
-    sameSite: "lax",
-    secure: process.env.NODE_ENV === "production",
-    path: "/",
-    maxAge: 0,
-  });
+  cookieStore.set(cookie.name, cookie.value, cookie.options);
+}
+
+export function createVendorSessionCookie(payload: VendorSessionPayload, secure: boolean) {
+  const secret = getRogvedaSessionSecret();
+  if (!secret) {
+    return null;
+  }
+
+  return {
+    name: vendorSessionCookieName,
+    value: createVendorSessionToken(payload, {
+      secret,
+      expiresInSeconds: vendorSessionMaxAgeSeconds,
+    }),
+    options: {
+      httpOnly: true,
+      sameSite: "lax" as const,
+      secure,
+      path: "/",
+      maxAge: vendorSessionMaxAgeSeconds,
+    },
+  };
+}
+
+export function createClearedVendorSessionCookie(secure: boolean) {
+  return {
+    name: vendorSessionCookieName,
+    value: "",
+    options: {
+      httpOnly: true,
+      sameSite: "lax" as const,
+      secure,
+      path: "/",
+      maxAge: 0,
+    },
+  };
 }
